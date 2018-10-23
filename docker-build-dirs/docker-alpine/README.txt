@@ -128,3 +128,37 @@ As for any pre-built image usage, it is the image user's
 responsibility to ensure that any use of this image complies with any
 relevant licenses for all software contained within.
 
+- - -
+
+https://hub.docker.com/_/scratch/
+
+an explicitly empty image, especially for building images "FROM
+scratch"
+
+Full Description
+
+FROM scratch
+
+This image is most useful in the context of building base images (such
+as debian and busybox) or super minimal images (that contain only a
+single binary and whatever it requires, such as hello-world).
+
+As of Docker 1.5.0 (specifically, docker/docker#8827), FROM scratch is
+a no-op in the Dockerfile, and will not create an extra layer in your
+image (so a previously 2-layer image will be a 1-layer image instead).
+
+From https://docs.docker.com/engine/userguide/eng-image/baseimages/:
+
+You can use Docker's reserved, minimal image, scratch, as a starting
+point for building containers. Using the scratch "image" signals to
+the build process that you want the next command in the Dockerfile to
+be the first filesystem layer in your image.
+
+While scratch appears in Docker's repository on the hub, you can't
+pull it, run it, or tag any image with the name scratch. Instead, you
+can refer to it in your Dockerfile. For example, to create a minimal
+container using scratch:
+
+ FROM scratch
+ COPY hello /
+ CMD ["/hello"]
