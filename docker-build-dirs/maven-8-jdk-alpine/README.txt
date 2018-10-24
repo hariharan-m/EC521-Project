@@ -1,15 +1,26 @@
 This is the basis for the jrrdev-cve-2017-5638 setup (The specific
 version they used is jdk-8-alpine/Dockerfile in the list below)
 
+It depends on openjdk-8-jdk-alpine
+
+To demonstrate the CVE-2017-5638 exploit one can do:
+
+  docker system prune  # If needed, clean up from previous builds
   docker image ls -a   # Should show nothing except what you had at the start
+  ...
   # Assuming we are starting in this directory "maven-8-jdk-alpine"
   docker build . -t maven-8-jdk-alpine
   cd ../jrrdev-cve-2017-5638
   docker build . -t jrrdev-cve-2017-5638
   docker run -d -p 8080:8080 jrrdev-cve-2017-5638
-  python ex2.py http://127.0.0.1:8080/hello "ls -la"
-  ...
+  python ex2.py http://127.0.0.1:8080/hello "ls -la" # Should show exploit output
+  # ...
+  # now do whatever testing/debugging you want
+  # ...
   docker stop cc8e4c2ba92a
+  # Emulated system no longer running but image still present. If you want to run more tests later, go back to the step "docker run ... jrrdev-cve-2017-5638"
+  # ...
+  # Now we want to delete everything we built
   docker container rm cc8e4c2ba92a
   docker image rm maven-8-jdk-alpine
   docker image ls -a   # Should show nothing except what you had at the start
