@@ -1,4 +1,5 @@
-FROM openjdk:8-jdk-alpine
+# Originally FROM openjdk:8-jdk-alpine
+FROM openjdk:8-jdk-alpine AS maven-8-jdk-alpine
 
 RUN apk add --no-cache curl tar bash procps
 

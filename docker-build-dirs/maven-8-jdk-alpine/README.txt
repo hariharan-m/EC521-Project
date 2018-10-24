@@ -1,6 +1,25 @@
 This is the basis for the jrrdev-cve-2017-5638 setup (The specific
 version they used is jdk-8-alpine/Dockerfile in the list below)
 
+  docker image ls -a   # Should show nothing except what you had at the start
+  # Assuming we are starting in this directory "maven-8-jdk-alpine"
+  docker build . -t maven-8-jdk-alpine
+  cd ../jrrdev-cve-2017-5638
+  docker build . -t jrrdev-cve-2017-5638
+  docker run -d -p 8080:8080 jrrdev-cve-2017-5638
+  python ex2.py http://127.0.0.1:8080/hello "ls -la"
+  ...
+  docker stop cc8e4c2ba92a
+  docker container rm cc8e4c2ba92a
+  docker image rm maven-8-jdk-alpine
+  docker image ls -a   # Should show nothing except what you had at the start
+
+- - -
+
+Needed files are at:
+  https://raw.githubusercontent.com/carlossg/docker-maven/f581ea002e5d067deb6213c00a4d217297cad469/jdk-8-alpine/mvn-entrypoint.sh
+  https://raw.githubusercontent.com/carlossg/docker-maven/f581ea002e5d067deb6213c00a4d217297cad469/jdk-8-alpine/settings-docker.xml
+
 - - -
 
 Source: https://hub.docker.com/_/maven/
