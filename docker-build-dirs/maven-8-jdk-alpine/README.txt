@@ -10,6 +10,11 @@ To demonstrate the CVE-2017-5638 exploit one can do:
   ...
   # Assuming we are starting in this directory "maven-8-jdk-alpine"
   docker build . -t maven-8-jdk-alpine
+
+  # (Alternatively this can be done as two instructions:)
+     docker build .    # And take note of the hash it creates as the last step
+     docker tag ec55037841fb maven-8-jdk-alpine   # Here 'ec55037841fb' is the hash
+
   cd ../jrrdev-cve-2017-5638
   docker build . -t jrrdev-cve-2017-5638
   docker run -d -p 8080:8080 jrrdev-cve-2017-5638
