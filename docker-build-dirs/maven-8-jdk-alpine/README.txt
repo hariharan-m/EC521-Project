@@ -136,9 +136,9 @@ How to use this image
 You can run a Maven project by using the Maven Docker image directly,
 passing a Maven command to docker run:
 
-$ docker run -it --rm --name my-maven-project -v
-"$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.3-jdk-8 mvn
-clean install
+$ docker run -it --rm --name my-maven-project \
+  -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven \
+  maven:3.3-jdk-8 mvn clean install
 
 Building local Docker image (optional)
 
@@ -153,13 +153,13 @@ Reusing the Maven local repository
 The local Maven repository can be reused across containers by creating
 a volume and mounting it in /root/.m2.
 
-docker volume create --name maven-repo
+  docker volume create --name maven-repo
 
-docker run -it -v maven-repo:/root/.m2 maven mvn archetype:generate #
-will download artifacts
+  # will download artifacts
+  docker run -it -v maven-repo:/root/.m2 maven mvn archetype:generate
 
-docker run -it -v maven-repo:/root/.m2 maven mvn archetype:generate #
-will reuse downloaded artifacts
+  # will reuse downloaded artifacts
+  docker run -it -v maven-repo:/root/.m2 maven mvn archetype:generate
 
 Or you can just use your home .m2 cache directory that you share e.g.
 with your Eclipse/IDEA:
