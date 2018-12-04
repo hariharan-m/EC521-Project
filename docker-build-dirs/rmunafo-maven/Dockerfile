@@ -1,6 +1,12 @@
-FROM openjdk:12-jdk-alpine
+FROM ubuntu:latest
 
-RUN apk add --no-cache curl tar bash procps
+# From: https://github.com/tianon/docker-brew-ubuntu-core/issues/122
+# we're doing it first so there's no need to do the "dpkg|grep|xargs apt-get reinstall" thing
+RUN rm /etc/dpkg/dpkg.cfg.d/excludes
+
+RUN apt update
+RUN apt-get install -y curl tar bash procps man-db wget openjdk-8-jdk
+
 
 ARG MAVEN_VERSION=3.6.0
 ARG USER_HOME_DIR="/root"

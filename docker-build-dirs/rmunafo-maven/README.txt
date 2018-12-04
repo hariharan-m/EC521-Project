@@ -18,8 +18,8 @@ To proceed further one needs persistent storage. Docker does this with
   cd my-app
 
   type apt apk
-  apt update ; apt install vim  # for systems that have #apt#
-  apk add vim  # for systems that have #apk#
+  apt install -y vim  # for systems that have #apt#
+  apk add vim         # for systems that have #apk#
 
   vim pom.xml
   # Insert the following at the top level:
@@ -27,6 +27,8 @@ To proceed further one needs persistent storage. Docker does this with
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
   </properties>
+
+  and the following at the end
 
   <build>
     <plugins>
