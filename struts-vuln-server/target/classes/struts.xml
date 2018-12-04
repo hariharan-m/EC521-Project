@@ -2,24 +2,17 @@
 <!DOCTYPE struts PUBLIC
         "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
         "http://struts.apache.org/dtds/struts-2.5.dtd">
-
 <struts>
 
-    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.mapper.class" value="rest" />
 
-    <package name="myPackage" extends="struts-default">
+    <constant name="struts.convention.action.suffix" value="Controller"/>
+    <constant name="struts.convention.action.mapAllMatches" value="true"/>
+    <constant name="struts.convention.default.parent.package" value="struts-vuln-server"/>
+    <constant name="struts.convention.package.locators" value="ec521"/>
 
-        <default-action-ref name="index" />
-
-        <action name="index" class="ec521.team4.IndexAction">
-            <result>/WEB-INF/jsp/index.jsp</result>
-        </action>
-
-        <action name="helloWorld" class="helloWorldAction">
-            <result name="input">/jsp/index.jsp</result>
-            <result>/WEB-INF/jsp/helloWorld.jsp</result>
-        </action>
-
+    <package name="struts-vuln-server" extends="rest-default">
+        <global-allowed-methods>index,show,create,editNew</global-allowed-methods>
     </package>
-
 </struts>
