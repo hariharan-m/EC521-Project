@@ -5,7 +5,7 @@ FROM ubuntu:latest
 RUN rm /etc/dpkg/dpkg.cfg.d/excludes
 
 RUN apt update
-RUN apt-get install -y curl tar bash procps man-db wget openjdk-8-jdk
+RUN apt-get install -y curl tar bash procps man-db manpages wget openjdk-8-jdk
 
 
 ARG MAVEN_VERSION=3.6.0
