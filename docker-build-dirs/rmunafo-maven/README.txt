@@ -4,11 +4,31 @@ To build this image:
   chmod +x mvn-entrypoint.sh
   docker build --tag my_local_maven .
 
+  docker run -it my_local_maven /bin/sh
+  pwd
+  echo foo > foo.txt
+  exit
+
+You created a small test file and exited the shell. To continue where
+you left off (as long as the Docker system is still running on your
+machine), just do this:
+
+  docker start -a -i `docker ps -q -l`
+  cat foo.txt
+  exit
+
 To proceed further one needs persistent storage. Docker does this with
-"volumes". We want one volume for the 
+"volumes". We want one volume for the Maven system to save all of its
+persistent settings.
 
   docker volume rm maven-repo
   docker volume create --name maven-repo
+
+Start up a *new* container with the volume attached (this is a
+"branch" from before, i.e. the "foo.txt" file will not exist. The
+"docker start" command only resumes a stopped container (which is like
+a stopped process) and does not accept the -v option nor most other
+"docker run" options)
 
   docker run -it -v maven-repo:/root/.m2 my_local_maven /bin/sh
 
