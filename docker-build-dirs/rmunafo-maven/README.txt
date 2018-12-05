@@ -4,7 +4,7 @@ To build this image:
   chmod +x mvn-entrypoint.sh
   docker build --tag my_local_maven .
 
-  docker run -it --name maven2 my_local_maven /bin/sh
+  docker run -it --name maven2 my_local_maven /bin/bash
   pwd
   echo pre-Maven-installation steps will happen here > note1.txt
   exit
@@ -31,7 +31,7 @@ persistent settings.
 Now the previously committed "maven3" can be started with the volume
 attached:
 
-  docker run -it --name maven4 -v maven-repo:/root/.m2 maven3 /bin/sh
+  docker run -it --name maven4 -v maven-repo:/root/.m2 maven3 /bin/bash
 
   mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app \
    -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
@@ -69,7 +69,7 @@ At this point I exited again to save changes
 
   exit
   docker commit maven4 maven5
-  docker run -it --name maven6 -v maven-repo:/root/.m2 maven5 /bin/sh
+  docker run -it --name maven6 -v maven-repo:/root/.m2 maven5 /bin/bash
 
   cd my-app
   mvn package
@@ -128,6 +128,12 @@ different version.
  wget 'http://central.maven.org/maven2/edu/gmu/swe/phosphor/Phosphor/0.0.3/Phosphor-0.0.3.jar'
  java -jar Phosphor-0.0.3.jar /usr/lib/jvm/java-8-openjdk-amd64/jre jre-inst
 
+ mkdir sptest
+ cd sptest
+ git clone https://github.com/hariharan-m/EC521-Project
+ cd EC521-Project/struts-vuln-server
+ JAVA_HOME=/phosphor/jre-inst/ $JAVA_HOME/bin/java -Xbootclasspath/a:Phosphor-0.0.3.jar -javaagent:Phosphor-0.0.3.jar -cp . target/struts-vuln-server.war
+
 ----
 
 To create persistent files, use a Docker volume.
@@ -150,7 +156,7 @@ and it can be changed on a per-command basis:
 To manually view files or do other operations (rename, edit, etc.)
 use Busybox as a shell:
 
-  docker run -it --rm -v maven-repo:/.m2 busybox /bin/sh
+  docker run -it --rm -v maven-repo:/.m2 busybox /bin/bash
 
 
 You can also use a local directory to hold the contents of a "volume".
