@@ -1,1 +1,26 @@
 dockerfile~
+
+
+#Intellij Ignores
+# Source: https://github.com/github/gitignore/blob/master/Global/JetBrains.gitignore
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# Generated files
+.idea/**/contentModel.xml
+
+# Maven with auto-import
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+
+# File-based project format
+*.iws
+
+# IntelliJ
+out/
