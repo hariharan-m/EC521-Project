@@ -6,10 +6,10 @@ To build this image:
 
   docker run -it --name maven2 my_local_maven /bin/sh
   pwd
-  echo foo > foo.txt
+  echo pre-Maven-installation steps will happen here > note1.txt
   exit
 
-You created a small test file and exited the shell. To continue where
+You created a small text file and exited the shell. To continue where
 you left off (as long as the Docker system is still running on your
 machine), just do this:
 
@@ -37,10 +37,6 @@ attached:
    -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 
   cd my-app
-
-  type apt apk
-  apt install -y vim  # for systems that have #apt#
-  apk add vim         # for systems that have #apk#
 
   vim pom.xml
   # Insert the following at the top level:
@@ -89,6 +85,48 @@ does something dubious, like deserialise argv[1]:
 
   ./src/test/java/com/mycompany/app/AppTest.java
   ./src/main/java/com/mycompany/app/App.java
+
+----
+
+git clone https://github.com/hariharan-m/EC521-Project
+
+ git clone https://github.com/gmu-swe/phosphor.git
+ cd phosphor/Phosphor
+ vim pom.xml
+
+ mvn package
+ # Errors referencing:
+ #   org.codehaus.mojo:exec-maven-plugin
+ #   org.apache.maven.plugins:maven-source-plugin
+
+  <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/exec-maven-plugin -->
+  <dependency>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>1.6.0</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+  <dependency>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-source-plugin</artifactId>
+    <version>3.0.1</version>
+  </dependency>
+
+I gave up on this avenue.
+
+----
+
+I also briefly explored instrumenting the JRE on my Mac, but the
+instructions didn't work probably because my Mac's JDK is a much
+different version.
+
+----
+
+ mkdir phosphor
+ cd phosphor
+ wget 'http://central.maven.org/maven2/edu/gmu/swe/phosphor/Phosphor/0.0.3/Phosphor-0.0.3.jar'
+ java -jar Phosphor-0.0.3.jar /usr/lib/jvm/java-8-openjdk-amd64/jre jre-inst
 
 ----
 
