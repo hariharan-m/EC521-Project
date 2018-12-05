@@ -11,7 +11,7 @@ public class RecordsService {
 
     public RecordsService(){
         ArrayList<Record> records1 = new ArrayList<>();
-        records1.add(new Record("Spenser", new BigDecimal(110.01)));
+        records1.add(new Record("Spenser", new BigDecimal(110)));
         records1.add(new Record("Spenser", new BigDecimal(42)));
         records1.add(new Record("Spenser", new BigDecimal(999.99)));
         records1.add(new Record("Spenser", new BigDecimal(19.99)));
@@ -36,6 +36,10 @@ public class RecordsService {
             userRecords.put(user, new ArrayList<Record>());
             userRecords.get(user).add(record);
         }
+    }
+
+    public List<String> getUsers() {
+        return new ArrayList<>(userRecords.keySet());
     }
 
     public List<Record> get(String user) {
