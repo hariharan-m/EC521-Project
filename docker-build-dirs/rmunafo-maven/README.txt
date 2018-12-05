@@ -14,7 +14,7 @@ you left off (as long as the Docker system is still running on your
 machine), just do this:
 
   docker start -a -i `docker ps -q -l`
-  cat foo.txt
+  cat note1.txt
   exit
 
 To save changes done so far:
@@ -136,6 +136,49 @@ different version.
 
 ----
 
+  chmod +x mvn-entrypoint.sh
+  docker build --tag my_local_maven .
+
+  docker run -it --name maven2 my_local_maven /bin/bash
+  pwd
+  echo pre-Maven-installation steps will happen here > note1.txt
+  exit
+
+  docker start -a -i `docker ps -q -l`
+  cat note1.txt
+  exit
+
+  docker commit maven2 maven3
+
+  docker volume rm maven-repo
+  docker volume create --name maven-repo
+
+  docker run -it --name maven4 -v maven-repo:/root/.m2 maven3 /bin/bash
+
+  cd /
+  mkdir phosphor
+  cd phosphor
+  wget 'http://central.maven.org/maven2/edu/gmu/swe/phosphor/Phosphor/0.0.3/Phosphor-0.0.3.jar'
+  chmod +x Phosphor-0.0.3.jar
+  java -jar Phosphor-0.0.3.jar /usr/lib/jvm/java-8-openjdk-amd64/jre jre-inst
+  chmod +x jre-inst/bin/*
+
+  cd /
+  mkdir sptest
+  cd sptest
+  git clone https://github.com/hariharan-m/EC521-Project
+  cd EC521-Project/struts-vuln-server
+
+  mvn package
+  java -jar /phosphor/Phosphor-0.0.3.jar target tg-inst
+
+  JAVA_HOME=/phosphor/jre-inst
+  $JAVA_HOME/bin/java -Xbootclasspath/a:/phosphor/Phosphor-0.0.3.jar \
+    -javaagent:/phosphor/Phosphor-0.0.3.jar -cp tg-inst \
+    team4.ec521.RecordsController.class
+
+----
+
 To create persistent files, use a Docker volume.
 
 The "normal" way to make a Docker volume that is stored within the
@@ -165,7 +208,7 @@ pathname, for which the following examples use the pwd command inside
 back-quotes:
 
   mkdir dir1
-  echo foo > dir1/foo.txt
+  echo foo > dir1/note1.txt
   docker run -it --rm -v `pwd`/dir1:/vol busybox ls -lR /vol
   mkdir dir1/dir2
   echo bar > dir1/dir2/bar.txt
