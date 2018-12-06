@@ -1,11 +1,22 @@
-FROM ubuntu:latest
+# FROM ubuntu:latest
+FROM tomcat:9-jre8
 
 # From: https://github.com/tianon/docker-brew-ubuntu-core/issues/122
 # we're doing it first so there's no need to do the "dpkg|grep|xargs apt-get reinstall" thing
-RUN rm /etc/dpkg/dpkg.cfg.d/excludes
+# RUN rm /etc/dpkg/dpkg.cfg.d/excludes
 
 RUN apt update
-RUN apt-get install -y bash curl git man-db manpages openjdk-8-jdk procps tar vim wget
+RUN apt-get install -y \
+  bash \
+  curl \
+  git \
+  man-db \
+  manpages \
+  openjdk-8-jdk \
+  procps \
+  tar \
+  vim \
+  wget
 
 ARG MAVEN_VERSION=3.6.0
 ARG USER_HOME_DIR="/root"

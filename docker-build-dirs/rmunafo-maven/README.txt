@@ -169,13 +169,22 @@ different version.
   git clone https://github.com/hariharan-m/EC521-Project
   cd EC521-Project/struts-vuln-server
 
+
+
   mvn package
+
+  #Instrument the webapp - this works but we can't launch it directly
   java -jar /phosphor/Phosphor-0.0.3.jar target tg-inst
 
-  JAVA_HOME=/phosphor/jre-inst
-  $JAVA_HOME/bin/java -Xbootclasspath/a:/phosphor/Phosphor-0.0.3.jar \
-    -javaagent:/phosphor/Phosphor-0.0.3.jar -cp tg-inst \
-    team4.ec521.RecordsController.class
+  # Create instrumented version of Tomcat
+  cd /usr/local
+  java -jar /phosphor/Phosphor-0.0.3.jar /usr/local/tomcat tc-inst
+
+  # Now we have to do something like this:
+  # JAVA_HOME=/phosphor/jre-inst
+  # $JAVA_HOME/bin/java -Xbootclasspath/a:/phosphor/Phosphor-0.0.3.jar \
+  #   -javaagent:/phosphor/Phosphor-0.0.3.jar -cp tg-inst \
+  #   team4.ec521.RecordsController.class
 
 ----
 
