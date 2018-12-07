@@ -33,6 +33,85 @@ attached:
 
   docker run -it --name maven4 -v maven-repo:/root/.m2 maven3 /bin/bash
 
+Build Phosphor:
+
+  cd /
+  mkdir phosphor
+  cd phosphor
+  wget 'http://central.maven.org/maven2/edu/gmu/swe/phosphor/Phosphor/0.0.3/Phosphor-0.0.3.jar'
+  chmod +x Phosphor-0.0.3.jar
+
+Add taint-tracking code to the JRE and place the "instrumented"
+version in ./jre-inst:
+
+  java -jar Phosphor-0.0.3.jar /usr/lib/jvm/java-8-openjdk-amd64/jre jre-inst
+  chmod +x jre-inst/bin/*
+
+Get Spenser's vulnerable server and build it:
+
+  cd /
+  mkdir sptest
+  cd sptest
+  git clone https://github.com/hariharan-m/EC521-Project
+  cd EC521-Project/struts-vuln-server
+  mvn package
+
+Instrument the webapp - this works but we can't launch it directly
+
+  java -jar /phosphor/Phosphor-0.0.3.jar target tg-inst
+
+Create instrumented version of Tomcat
+
+  cd /usr/local
+  java -jar /phosphor/Phosphor-0.0.3.jar /usr/local/tomcat tc-inst
+
+  # Now we have to do something like this:
+  # JAVA_HOME=/phosphor/jre-inst
+  # $JAVA_HOME/bin/java -Xbootclasspath/a:/phosphor/Phosphor-0.0.3.jar \
+  #   -javaagent:/phosphor/Phosphor-0.0.3.jar -cp tg-inst \
+  #   team4.ec521.RecordsController.class
+
+
+==== = = = = = = = = = = = = = = = = = = = = = = ====
+     (older notes/walkthroughs follow this line)
+==== = = = = = = = = = = = = = = = = = = = = = = ====
+
+----
+
+To build this image:
+
+  chmod +x mvn-entrypoint.sh
+  docker build --tag my_local_maven .
+
+  docker run -it --name maven2 my_local_maven /bin/bash
+  pwd
+  echo pre-Maven-installation steps will happen here > note1.txt
+  exit
+
+You created a small text file and exited the shell. To continue where
+you left off (as long as the Docker system is still running on your
+machine), just do this:
+
+  docker start -a -i `docker ps -q -l`
+  cat note1.txt
+  exit
+
+To save changes done so far:
+
+  docker commit maven2 maven3
+
+To proceed further one needs persistent storage. Docker does this with
+"volumes". We want one volume for the Maven system to save all of its
+persistent settings.
+
+  docker volume rm maven-repo
+  docker volume create --name maven-repo
+
+Now the previously committed "maven3" can be started with the volume
+attached:
+
+  docker run -it --name maven4 -v maven-repo:/root/.m2 maven3 /bin/bash
+
   mvn archetype:generate -DgroupId=com.mycompany.app -DartifactId=my-app \
    -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 
