@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: sahko
@@ -11,6 +12,12 @@
     <title>Records: Edit New</title>
 </head>
 <body>
-    <p>Create new record</p>
+    <h2>Create new record</h2>
+    <s:form action="upload" enctype="multipart/form-data" method="post">
+        <label for="fileUpload">Select a file to upload</label>
+        <s:file name="fileUpload" size="30" accept=".xml" />
+        <br />
+        <s:submit value="submit" />
+    </s:form>
 </body>
 </html>

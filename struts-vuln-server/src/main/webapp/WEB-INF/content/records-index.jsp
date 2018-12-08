@@ -20,6 +20,6 @@
             <li><a href="${pageContext.request.contextPath}/records/${cust}">See orders for ${cust}</a></li>
         </ul>
     </s:iterator>
-    <a href="${pageContext.request.contextPath}/records/new">Create new order</a>
+    <a href="${pageContext.request.contextPath}/records/create">Create new order</a>
 </body>
 </html>

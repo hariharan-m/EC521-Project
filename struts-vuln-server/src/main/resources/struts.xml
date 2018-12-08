@@ -13,5 +13,8 @@
 
     <package name="rest-extended" extends="rest-default">
         <global-allowed-methods>index,show,create,update,destroy,deleteConfirm,edit,editNew</global-allowed-methods>
+        <!--<action name="upload" class="ec521.team4.RecordsController" method="post">
+            <result name="success">/main/webapp/WEB-INF/content/records-upload.jsp</result>
+        </action>-->
     </package>
 </struts>
