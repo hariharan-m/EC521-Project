@@ -54,7 +54,7 @@ Create instrumented version of Tomcat
   cd /usr/local
   java -jar /phosphor/Phosphor-0.0.3.jar /usr/local/tomcat tc-inst
 
-Get Spenser's vulnerable server and build it:
+Get Spenser's vulnerable server:
 
   cd /
   mkdir sptest
@@ -71,22 +71,22 @@ Instrument the webapp - this presently generates errors
 
   cd /sptest/EC521-Project/struts-vuln-server
   java -jar /phosphor/Phosphor-0.0.3.jar target tg-inst
-  # alternatively you could instrument just the war file:
-  # java -jar /phosphor/Phosphor-0.0.3.jar target/struts-vuln-server.war target/svs-inst.war
+  # (alternatively you could instrument just the war file:
+  #   java -jar /phosphor/Phosphor-0.0.3.jar target/struts-vuln-server.war target/svs-inst.war
+  # but the same errors happpen)
 
-Now we have to do something like this:
+Now we have to do something like this (from Spenser via Slack):
 
-Copy struts-vuln-server/target/struts-vuln-server.war to
-<tomcat_root>/webapps. Run Tomcat from <tomcat_root>/bin/startup.sh
-(make sure you set JAVA_HOME to your instrumented JRE!). You should
-see the home page at localhost:8080/struts-vuln-server/
-
-The "create new record" link
-(localhost:8080/struts-vuln-server/records/new) will have a file
-upload field. My current goal is to have the xml file you upload add a
-new record, which gets stored in an xml file in /tmp, then shows a
-result page that calls "ls". You will be able to escape the shell
-command to have RCE
+    "Copy struts-vuln-server/target/struts-vuln-server.war to
+  <tomcat_root>/webapps. Run Tomcat from <tomcat_root>/bin/startup.sh
+  (make sure you set JAVA_HOME to your instrumented JRE!). You should
+  see the home page at localhost:8080/struts-vuln-server/
+    "The 'create new record' link
+  (localhost:8080/struts-vuln-server/records/new) will have a file
+  upload field. My current goal is to have the xml file you upload add
+  a new record, which gets stored in an xml file in /tmp, then shows a
+  result page that calls 'ls'. You will be able to escape the shell
+  command to have RCE"
 
 ==== = = = = = = = = = = = = = = = = = = = = = = ====
      (older notes/walkthroughs follow this line)
