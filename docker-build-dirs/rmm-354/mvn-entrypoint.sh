@@ -1,6 +1,6 @@
 #! /bin/bash -eu
-#   .../docker-build-dirs/rmunafo-maven/mvn-entrypoint.sh
-# for Dockerfile that builds Maven 3.6.0 from tomcat:9-jre8
+#   .../docker-build-dirs/rmm-354/mvn-entrypoint.sh
+# for Dockerfile that builds Maven 3.5.4 from tomcat:9-jre8
 
 set -o pipefail
 
