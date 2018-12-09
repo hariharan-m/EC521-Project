@@ -70,16 +70,20 @@ RUN cd /pe \
 
 COPY jose-pom.xml /pe/phosphor-examples/pom.xml
 
+COPY jose-OTE.java /pe/phosphor-examples/src/main/java/com/josecambronero/ObjectTagExamples.java
+
 RUN cd /pe/phosphor-examples \
- && mvn install:install-file -Dfile=Phosphor-0.0.4-SNAPSHOT.jar \
-   -DgroupId=edu.columbia.cs.psl.phosphor -DartifactId=Phosphor \
-   -Dversion=0.0.4-SNAPSHOT -Dpackaging=jar
+ && mvn install:install-file \
+  -Dfile=/phosphor/Phosphor/target/Phosphor-0.0.4-SNAPSHOT.jar \
+  -DgroupId=edu.columbia.cs.psl.phosphor -DartifactId=Phosphor \
+  -Dversion=0.0.4-SNAPSHOT -Dpackaging=jar
 
 RUN cd /pe/phosphor-examples \
  && mvn package
 
-#RUN cd /pe/phosphor-examples \
-# && ./run_examples.sh /phosphor/Phosphor/target
+RUN cd /pe/phosphor-examples \
+ && ./run_examples.sh /phosphor/Phosphor/target
 
+# These (entrypoint and cmd) might not be relevant any more...
 ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
 CMD ["mvn"]
