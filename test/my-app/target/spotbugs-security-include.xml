@@ -1,5 +1,5 @@
 <FindBugsFilter>
     <Match>
-        <Bug category="OBJECT_DESERIALIZATION"/>
+        <Bug category="SECURITY"/>
     </Match>
 </FindBugsFilter>
