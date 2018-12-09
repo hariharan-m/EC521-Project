@@ -58,18 +58,26 @@ RUN cd /phosphor/Phosphor \
 RUN cd /phosphor/Phosphor/target/jdk1.8.0_181 \
  && (cd /docker-java-home ; tar c .) | tar xfBpv -
 
-#RUN cd /phosphor/Phosphor \
-# && mvn install
-#
-#RUN cd / \
-# && mkdir pe
-#
-#RUN cd /pe \
-# && git clone 'https://github.com/josepablocam/phosphor-examples.git'
-#
-#RUN cd /pe/phosphor-examples \
-# && mvn package
-#
+# This works, though the testing stage gives error "Could not find or load main class org.apache.maven.surefire.booter.ForkedBooter"
+RUN cd /phosphor/Phosphor \
+ && mvn install
+
+RUN cd / \
+ && mkdir pe
+
+RUN cd /pe \
+ && git clone 'https://github.com/josepablocam/phosphor-examples.git'
+
+COPY jose-pom.xml /pe/phosphor-examples/pom.xml
+
+RUN cd /pe/phosphor-examples \
+ && mvn install:install-file -Dfile=Phosphor-0.0.4-SNAPSHOT.jar \
+   -DgroupId=edu.columbia.cs.psl.phosphor -DartifactId=Phosphor \
+   -Dversion=0.0.4-SNAPSHOT -Dpackaging=jar
+
+RUN cd /pe/phosphor-examples \
+ && mvn package
+
 #RUN cd /pe/phosphor-examples \
 # && ./run_examples.sh /phosphor/Phosphor/target
 
