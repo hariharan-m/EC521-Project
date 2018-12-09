@@ -4,11 +4,14 @@ To build this image:
   chmod +x mvn-entrypoint.sh   # - - - If needed
   docker build --tag my_local_maven .
 
-  docker run -it --name maven2 my_local_maven /bin/bash
-
-The next commands to run would be these, but they don't work yet:
+The final command that gets run is this:
 
   ./run_examples.sh /phosphor/Phosphor/target
+
+To explore further, you'd start by:
+
+  docker run -it --name maven2 my_local_maven /bin/bash
+  cd /pe/phosphor-examples
 
 ----
 
