@@ -6,7 +6,7 @@ To build this image:
 
   docker run -it --name maven2 my_local_maven /bin/bash
   pwd
-  echo pre-Maven-installation steps will happen here > note1.txt
+  echo pre-Phosphor-installation steps will happen here > note1.txt
   exit
 
 You created a small text file and exited the shell. To continue where
@@ -32,13 +32,15 @@ Now the previously committed "maven3" can be started with the volume
 attached:
 
   docker run -it --name maven4 -v maven-repo:/root/.m2 maven3 /bin/bash
+  cat note1.txt
 
 Build Phosphor:
 
   cd /
   mkdir phosphor
   cd phosphor
-  wget 'http://central.maven.org/maven2/edu/gmu/swe/phosphor/Phosphor/0.0.3/Phosphor-0.0.3.jar'
+  MVN2='http://central.maven.org/maven2'
+  wget "$MVN2/edu/gmu/swe/phosphor/Phosphor/0.0.3/Phosphor-0.0.3.jar"
   chmod +x Phosphor-0.0.3.jar
 
 Add taint-tracking code to the JRE and place the "instrumented"
@@ -47,30 +49,44 @@ version in ./jre-inst:
   java -jar Phosphor-0.0.3.jar /usr/lib/jvm/java-8-openjdk-amd64/jre jre-inst
   chmod +x jre-inst/bin/*
 
-Get Spenser's vulnerable server and build it:
+Create instrumented version of Tomcat
+
+  cd /usr/local
+  java -jar /phosphor/Phosphor-0.0.3.jar /usr/local/tomcat tc-inst
+
+Get Spenser's vulnerable server:
 
   cd /
   mkdir sptest
   cd sptest
   git clone https://github.com/hariharan-m/EC521-Project
   cd EC521-Project/struts-vuln-server
+
+Build it (this is when Maven will actually load most of its jar files
+from repo.maven.apache.org):
+
   mvn package
 
-Instrument the webapp - this works but we can't launch it directly
+Instrument the webapp - this presently generates errors
 
+  cd /sptest/EC521-Project/struts-vuln-server
   java -jar /phosphor/Phosphor-0.0.3.jar target tg-inst
+  # (alternatively you could instrument just the war file:
+  #   java -jar /phosphor/Phosphor-0.0.3.jar target/struts-vuln-server.war target/svs-inst.war
+  # but the same errors happpen)
 
-Create instrumented version of Tomcat
+Now we have to do something like this (from Spenser via Slack):
 
-  cd /usr/local
-  java -jar /phosphor/Phosphor-0.0.3.jar /usr/local/tomcat tc-inst
-
-  # Now we have to do something like this:
-  # JAVA_HOME=/phosphor/jre-inst
-  # $JAVA_HOME/bin/java -Xbootclasspath/a:/phosphor/Phosphor-0.0.3.jar \
-  #   -javaagent:/phosphor/Phosphor-0.0.3.jar -cp tg-inst \
-  #   team4.ec521.RecordsController.class
-
+    "Copy struts-vuln-server/target/struts-vuln-server.war to
+  <tomcat_root>/webapps. Run Tomcat from <tomcat_root>/bin/startup.sh
+  (make sure you set JAVA_HOME to your instrumented JRE!). You should
+  see the home page at localhost:8080/struts-vuln-server/
+    "The 'create new record' link
+  (localhost:8080/struts-vuln-server/records/new) will have a file
+  upload field. My current goal is to have the xml file you upload add
+  a new record, which gets stored in an xml file in /tmp, then shows a
+  result page that calls 'ls'. You will be able to escape the shell
+  command to have RCE"
 
 ==== = = = = = = = = = = = = = = = = = = = = = = ====
      (older notes/walkthroughs follow this line)
