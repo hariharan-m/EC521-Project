@@ -3,6 +3,11 @@ This is the configuration used as the basis for openjdk-8-jdk-alpine
 It is the root configuration for all Docker donfigurations, the
 absolute minimum possible runnable system.
 
+  docker build --tag my_alpine .
+  docker run -it my_alpine /bin/sh
+  mount | grep overlay
+  exit
+
 - - -
 
 Source: https://hub.docker.com/_/alpine/
