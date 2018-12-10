@@ -1,0 +1,4 @@
+java/lang/ProcessBuilder.<init>([Ljava/lang/String;)Ljava/lang/ProcessBuilder;
+java/lang/ProcessBuilder.<init>(Ljava/util/List;)Ljava/lang/ProcessBuilder
+java/lang/ProcessBuilder.command(Ljava/util/List;)Ljava/lang/ProcessBuilder;
+java/lang/ProcessBuilder.command([Ljava/lang/String;)Ljava/lang/ProcessBuilder;

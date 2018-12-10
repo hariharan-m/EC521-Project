@@ -1,0 +1,12 @@
+com/thoughtworks/xstream/XStream.fromXML(Ljava.io.File;)Ljava/lang/Object;
+com/thoughtworks/xstream/XStream.fromXML(Ljava.io.File;Ljava/lang/Object;)Ljava/lang/Object;
+com/thoughtworks/xstream/XStream.fromXML(Ljava.io.InputStream;)Ljava/lang/Object;
+com/thoughtworks/xstream/XStream.fromXML(Ljava.io.InputStream;Ljava/lang/Object;)Ljava/lang/Object;
+com/thoughtworks/xstream/XStream.fromXML(Ljava.io.Reader;)Ljava/lang/Object;
+com/thoughtworks/xstream/XStream.fromXML(Ljava.io.Reader;Ljava/lang/Object;)Ljava/lang/Object;
+com/thoughtworks/xstream/XStream.fromXML(Ljava/lang/String;)Ljava/lang/Object;0
+com/thoughtworks/xstream/XStream.fromXML(Ljava/lang/String;Ljava/lang/Object;)Ljava/lang/Object;1
+com/thoughtworks/xstream/XStream.fromXML(Ljava.net.URL;)Ljava/lang/Object;
+com/thoughtworks/xstream/XStream.fromXML(Ljava.net.URL;Ljava/lang/Object;)Ljava/lang/Object;
+org/apache/struts2/rest/handler/XStreamHandler.fromObject(Lcom.symphony.xwork2.ActionInvocation;Ljava/lang/Object;Ljava/lang/String;Ljava.io.Writer;)Ljava/lang/String;1
+org/apache/struts2/rest/handler/XStreamHandler.toObject(Lcom.symphony.xwork2.ActionInvocation;Ljava.io.Reader;Ljava/lang/Object;)V
