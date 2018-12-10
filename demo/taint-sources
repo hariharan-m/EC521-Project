@@ -10,3 +10,8 @@ com/thoughtworks/xstream/XStream.fromXML(Ljava.net.URL;)Ljava/lang/Object;
 com/thoughtworks/xstream/XStream.fromXML(Ljava.net.URL;Ljava/lang/Object;)Ljava/lang/Object;
 org/apache/struts2/rest/handler/XStreamHandler.fromObject(Lcom.symphony.xwork2.ActionInvocation;Ljava/lang/Object;Ljava/lang/String;Ljava.io.Writer;)Ljava/lang/String;1
 org/apache/struts2/rest/handler/XStreamHandler.toObject(Lcom.symphony.xwork2.ActionInvocation;Ljava.io.Reader;Ljava/lang/Object;)V
+
+ec521/team4/RecordsController.getTaintedString()Ljava/lang/String;
+ec521/team4/RecordsController.getTaintedStringList()Ljava/util/List;
+ec521/team4/RecordsController.getTaintedList()I
+
